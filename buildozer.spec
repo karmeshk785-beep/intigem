@@ -1,14 +1,20 @@
-name: Build APK
-on: [push, workflow_dispatch]
-jobs:
-  build:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ArtemSBulgarian/buildozer-action@v1
-        with:
-          command: buildozer android debug
-      - uses: actions/upload-artifact@v4
-        with:
-          name: intigem-apk
-          path: bin/*.apk
+
+[app]
+title = Local Studio
+package.name = localstudio
+package.domain = org.tilak
+source.dir = .
+source.include_exts = py
+version = 0.1
+requirements = python3,kivy==2.3.0,pyjnius,android,openssl,certifi
+orientation = portrait
+fullscreen = 0
+android.permissions = INTERNET
+android.api = 33
+android.minapi = 24
+android.archs = arm64-v8a
+android.accept_sdk_license = True
+
+[buildozer]
+log_level = 2
+warn_on_root = 1
