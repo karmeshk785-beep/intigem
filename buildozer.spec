@@ -15,6 +15,7 @@ android.ndk = 25b
 android.ndk_api = 24
 android.archs = arm64-v8a
 android.accept_sdk_license = True
+android.extra_manifest_application_arguments = extra_manifest_application_arguments.xml
 p4a.branch = v2024.01.21
 
 [buildozer]
