@@ -13,10 +13,15 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git zip unzip openjdk-17-jdk automake autoconf libtool pkg-config zlib1g-dev libncurses-dev cmake libffi-dev libssl-dev
+          sudo apt-get install -y git zip unzip openjdk-17-jdk automake autoconf libtool libltdl-dev pkg-config zlib1g-dev libncurses-dev cmake libffi-dev libssl-dev
           pip install buildozer cython==0.29.36
       - name: Build APK
-        run: buildozer -v android debug
+        run: |
+          set -o pipefail
+          buildozer -v android debug 2>&1 | tee build.log
+      - name: Show errors
+        if: failure()
+        run: grep -n -i -E "error|failed|fatal|not found|undefined" build.log | grep -v -E "^[0-9]+:#|GITHUB|ENVIRONMENT" | tail -40 || true
       - uses: actions/upload-artifact@v4
         with:
           name: LocalStudio-apk
